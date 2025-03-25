@@ -53,34 +53,36 @@ const orders: Order[] = [
   }
 ];
 
-const MyOrders=() => {
+const MyOrders = () => {
   return (
     <div className="flex flex-col min-h-screen">
-    <Header/>
+      <Header container="home"/>
 
-      <main className="flex-grow px-[130px] py-4 space-y-6">
+      <main className="flex-grow px-4 sm:px-6 md:px-8 lg:px-[130px] py-4 space-y-6">
         {orders.map((order) => (
           <div
             key={order.id}
-            className="flex gap-4 border p-4 rounded shadow-sm items-center"
+            className="flex flex-col sm:flex-row gap-4 border p-4 rounded shadow-sm"
           >
             <img
               src={order.image}
               alt={order.title}
-              className="w-24 h-25 object-cover rounded"
+              className="w-24 h-32 sm:h-25 object-cover rounded mx-auto sm:mx-0"
             />
-            <div className="flex justify-between w-full items-start">
-              <div>
-                <h2 className="text-lg font-semibold">{order.title}</h2>
-                <p className="text-gray-600 mb-2">by {order.author}</p>
-                <div className="text-base">
+            <div className="flex flex-col sm:flex-row justify-between w-full items-start gap-4">
+              <div className="text-center sm:text-left">
+                <div className="flex flex-col sm:flex-row sm:items-baseline gap-2">
+                  <h2 className="text-base sm:text-lg font-semibold">{order.title}</h2>
+                  <p className="text-gray-600 text-sm sm:text-base">by {order.author}</p>
+                </div>
+                <div className="text-sm sm:text-base mt-2">
                   <span className="text-black font-bold">Rs. {order.price}</span>
                   <span className="line-through text-gray-400 ml-2">
                     Rs. {order.originalPrice}
                   </span>
                 </div>
               </div>
-              <div className="text-sm text-green-600 font-medium">
+              <div className="text-xs sm:text-sm text-green-600 font-medium text-center sm:text-right w-full sm:w-auto">
                 ● Order Placed on {order.orderDate}
               </div>
             </div>
@@ -88,7 +90,7 @@ const MyOrders=() => {
         ))}
       </main>
 
-    <Footer/>
+      <Footer/>
     </div>
   );
 };

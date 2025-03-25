@@ -5,8 +5,6 @@ import { Dropdown, Space } from 'antd';
 import BooksCard from './BooksCard';
 import Header from '../Common/Header';
 import Footer from '../Common/Footer';
-import Breadcrumbs from '../Common/Breadcrumbs';
-
 
 const items: MenuProps['items'] = [
     {
@@ -37,8 +35,7 @@ const items: MenuProps['items'] = [
 const BookContainer = () => {
     return (
         <div>
-        <Header/>
-        <Breadcrumbs/>
+        <Header container={'home'}/>
         <div className='max-w-6xl mx-auto p-4 md:p-8'>
             <div className='flex justify-between items-center mb-6'>
                 <div className='flex items-center space-x-2'>
