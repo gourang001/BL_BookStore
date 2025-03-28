@@ -3,7 +3,7 @@ import Template from './Template'
 
 function LoginForm() {
   return (
-    <div>
+    <div data-testid='login'>
       <Template container={'login'}/>
     </div>
   )

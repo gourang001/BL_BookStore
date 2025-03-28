@@ -1,12 +1,12 @@
-import React from 'react'
-import Template from './Template'
+import React from 'react';
+import Template from './Template';
 
 function RegisterForm() {
   return (
-    <div>
-      <Template container={"register"}/>
+    <div data-testid="register"> 
+      <Template container={"register"} />
     </div>
-  )
+  );
 }
 
-export default RegisterForm
+export default RegisterForm;

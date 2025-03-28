@@ -27,7 +27,7 @@ function Feedback({ bookId: propBookId }) {
     <div className="mt-4">
       {reviews.map((review) => (
         <div className="flex gap-3 py-2 items-start" key={review._id}>
-          {/* User Initials */}
+
           <div className="w-20 h-10 bg-[#F5F5F5] flex items-center justify-center rounded-full">
             <p className="text-[#707070]">
               {review.user_id.fullName.split(" ")[0].charAt(0).toUpperCase()}

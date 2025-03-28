@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import logo from "../../assets/education.svg";
 import { IoIosSearch } from "react-icons/io";
 import { AiOutlineShoppingCart } from "react-icons/ai";
@@ -9,12 +9,33 @@ import { getCartItems } from "../../Utils/API";
 
 type headerProps = {
   container?: string;
+  onCartUpdate?: number; 
 };
 
-const Header = ({ container }: headerProps) => {
+const Header = ({ container, onCartUpdate }: headerProps) => {
   const [username, setUsername] = useState("");
   const [cartCount, setCartCount] = useState(0);
 
+  const fetchCartCount = useCallback(async () => {
+    try {
+      const response = await getCartItems();
+      console.log("Header API Response:", response); 
+      if (response.success && Array.isArray(response.result)) {
+        const totalCount = response.result.reduce((sum: number, item: any) => {
+          const quantity = item.quantityToBuy || 0; 
+          return sum + quantity;
+        }, 0);
+        setCartCount(totalCount);
+      } else {
+        setCartCount(0); 
+      }
+    } catch (err) {
+      console.error("Error fetching cart count:", err);
+      setCartCount(0); 
+    }
+  }, []);
+
+  
   useEffect(() => {
     const storedUsername = localStorage.getItem("userName");
     if (storedUsername) {
@@ -23,31 +44,17 @@ const Header = ({ container }: headerProps) => {
     }
   }, []);
 
+  
   useEffect(() => {
-    const fetchCartCount = async () => {
-      try {
-        const response = await getCartItems();
-        if (response.success) {
-          const cartItems = response.result.map(item => ({
-            quantity: item.quantityToBuy
-          }));
-          const totalCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-          setCartCount(totalCount);
-        }
-      } catch (err) {
-        setCartCount(0);
-      }
-    };
-
     fetchCartCount();
-  }, []);
+  }, [fetchCartCount, onCartUpdate]);
 
   return (
     <div className="w-full bg-[#A03037]">
       <div className="h-[60px] max-w-6xl flex justify-between mx-auto items-center px-7">
         <div className="flex items-center space-x-8">
           <NavLink to="/home" className="flex items-center space-x-2">
-            <img className="w-8" src={logo} alt="logo-img"></img>
+            <img className="w-8" src={logo} alt="logo-img" />
             <p className="text-white text-xl">Bookstore</p>
           </NavLink>
           {container === "home" && (
