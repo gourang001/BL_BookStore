@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/50</span>
+                <span class='fraction'>0/49</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/48</span>
+                <span class='fraction'>0/47</span>
             </div>
         
             
@@ -208,11 +208,7 @@
 <a name='L143'></a><a href='#L143'>143</a>
 <a name='L144'></a><a href='#L144'>144</a>
 <a name='L145'></a><a href='#L145'>145</a>
-<a name='L146'></a><a href='#L146'>146</a>
-<a name='L147'></a><a href='#L147'>147</a>
-<a name='L148'></a><a href='#L148'>148</a>
-<a name='L149'></a><a href='#L149'>149</a>
-<a name='L150'></a><a href='#L150'>150</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<a name='L146'></a><a href='#L146'>146</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -220,7 +216,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -252,9 +247,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -370,16 +362,15 @@
 <span class="cstat-no" title="statement not covered" >import { ToastContainer, toast } from "react-toastify";</span>
 <span class="cstat-no" title="statement not covered" >import "react-toastify/dist/ReactToastify.css";</span>
 &nbsp;
-// Define the correct type based on your API response
 type WishlistItem = {
-  _id: string; // Wishlist item ID
+  _id: string; 
   product_id: {
     _id: string;
     bookName: string;
     author: string;
     discountPrice: number;
     price: number;
-  } | null; // Allow null for product_id
+  } | null; 
   user_id: string;
   createdAt: string;
   updatedAt: string;
@@ -401,9 +392,6 @@ const MyWatchlist = <span class="cstat-no" title="statement not covered" ><span 
 <span class="cstat-no" title="statement not covered" >        return;</span>
       }
       const data = <span class="cstat-no" title="statement not covered" >await getWishlist(token);</span>
-<span class="cstat-no" title="statement not covered" >      console.log("Wishlist API Response:", data); </span>// Debug API response
-&nbsp;
-      // Filter out invalid items (e.g., product_id is null)
       const validWishlist = <span class="cstat-no" title="statement not covered" >Array.isArray(data)</span>
         ? data.filter(<span class="fstat-no" title="function not covered" >(i</span>tem): item is WishlistItem =&gt; <span class="cstat-no" title="statement not covered" >item.product_id !== null &amp;&amp; typeof item.product_id === "object")</span>
         : [];
@@ -428,7 +416,7 @@ const MyWatchlist = <span class="cstat-no" title="statement not covered" ><span 
 &nbsp;
   const handleRemoveFromWishlist = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >async (b</span>ookId: string) =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span></span>
 <span class="cstat-no" title="statement not covered" >    try {</span>
-<span class="cstat-no" title="statement not covered" >      await removeWishlist(bookId); </span>// Only pass bookId
+<span class="cstat-no" title="statement not covered" >      await removeWishlist(bookId); </span>
 <span class="cstat-no" title="statement not covered" >      toast.success("Item removed from wishlist", {</span>
         position: "top-right",
         autoClose: 2000,
@@ -437,7 +425,7 @@ const MyWatchlist = <span class="cstat-no" title="statement not covered" ><span 
         pauseOnHover: true,
         draggable: true,
       });
-<span class="cstat-no" title="statement not covered" >      await fetchWishlist(); </span>// Refresh from server
+<span class="cstat-no" title="statement not covered" >      await fetchWishlist(); </span>
     } catch (err: any) {
       const errorMessage = <span class="cstat-no" title="statement not covered" >err.response?.data?.message || err.message || "Failed to remove item from wishlist";</span>
 <span class="cstat-no" title="statement not covered" >      console.error("Remove wishlist error:", err);</span>
@@ -465,7 +453,7 @@ const MyWatchlist = <span class="cstat-no" title="statement not covered" ><span 
           &lt;div className="flex flex-col gap-4 max-w-[1100px] mt-4"&gt;
             {wishlist.map(<span class="fstat-no" title="function not covered" >(o</span>rder) =&gt; <span class="cstat-no" title="statement not covered" >(</span>
               &lt;div
-                key={order.product_id?._id || order._id} // Use product_id._id or fallback to order._id
+                key={order.product_id?._id || order._id} 
                 className="flex flex-col sm:flex-row items-start border border-gray-300 rounded-md p-4 bg-white"
               &gt;
                 &lt;img
@@ -492,7 +480,7 @@ const MyWatchlist = <span class="cstat-no" title="statement not covered" ><span 
                   &lt;/div&gt;
                   &lt;div className="text-xs sm:text-sm text-gray-500 mt-2 sm:mt-0 flex justify-center sm:justify-end"&gt;
                     &lt;button
-                      onClick={<span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >handleRemoveFromWishlist(order._id)}</span> // Use wishlist item _id
+                      onClick={<span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >handleRemoveFromWishlist(order._id)} </span>
                       className="hover:text-red-500 transition-colors"
                     &gt;
                       🗑
@@ -517,7 +505,7 @@ const MyWatchlist = <span class="cstat-no" title="statement not covered" ><span 
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-03-28T17:41:04.050Z
+                at 2025-03-30T17:49:45.198Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
