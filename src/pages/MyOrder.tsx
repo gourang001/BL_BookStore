@@ -5,7 +5,7 @@ import Breadcrumbs from '../components/Same/Breadcrumbs'
 import bookCover from '../assets/images/bookImage.png'
 import bookCover2 from '../assets/images/bookImage2.png'
 import OrderConatiner from '../components/Same/OrderConatiner'
-
+import {v4 as uuidv4} from 'uuid';
 const order = [
     {
         title: "Don't Make Me Think",
@@ -32,7 +32,7 @@ function MyOrder() {
                 {
                     order.map((order, index) => {
                         return (
-                            <div key={index} className='py-2'>
+                            <div key={uuidv4()} className='py-2'>
                                 <OrderConatiner order={order} container='myOrder' />
                             </div>
                         )

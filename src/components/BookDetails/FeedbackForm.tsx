@@ -1,12 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { IoStarOutline, IoStarSharp } from "react-icons/io5";
-import { addBookReviews } from '../../utils/API.js';
+import { addBookReviews } from "../../utils/API";
 
-function FeedbackForm({ bookId, onReviewSubmitted }) {
+interface Review {
+  _id: string;
+  user_id: { fullName: string };
+  rating: number;
+  comment: string;
+}
+
+interface FeedbackFormProps {
+  bookId: string;
+  onReviewSubmitted: (review: Review) => void;
+}
+
+function FeedbackForm({ bookId, onReviewSubmitted }: FeedbackFormProps) {
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(0);
     const [reviewComment, setReviewComment] = useState("");
-    const [submitStatus, setSubmitStatus] = useState(null);
+    const [submitStatus, setSubmitStatus] = useState<string | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
@@ -29,7 +41,7 @@ function FeedbackForm({ bookId, onReviewSubmitted }) {
 
         try {
             const response = await addBookReviews(reviewComment, rating, bookId);
-            const newReview = {
+            const newReview: Review = {
                 _id: response._id || Date.now().toString(),
                 user_id: {
                     fullName: "Current User",
@@ -65,9 +77,17 @@ function FeedbackForm({ bookId, onReviewSubmitted }) {
                             className="cursor-pointer text-xl"
                         >
                             {star <= (hover || rating) ? (
-                                <IoStarSharp className="text-[#FFD700]" />
+                                <IoStarSharp 
+                                    className="text-[#FFD700]" 
+                                    role="img"
+                                    aria-label="filled star"
+                                />
                             ) : (
-                                <IoStarOutline className="text-[#707070]" />
+                                <IoStarOutline 
+                                    className="text-[#707070]" 
+                                    role="img"
+                                    aria-label="empty star"
+                                />
                             )}
                         </span>
                     ))}

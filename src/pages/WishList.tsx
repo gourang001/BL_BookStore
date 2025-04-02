@@ -7,20 +7,17 @@ import WishListContainer from '../components/Same/WishListContainer';
 
 function WishList() {
   const [wishlist, setWishlist] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); 
 
   const fetchWishlist = async () => {
     try {
-      setLoading(true);
+      setLoading(true); 
       const token = localStorage.getItem('token');
       const data = await getWishlist(token);
-      console.log("Fetched wishlist:", data); 
-      setWishlist(data || []); 
+      setWishlist(data);
     } catch (err: any) {
-      console.error("Error fetching wishlist:", err);
-      setWishlist([]); 
     } finally {
-      setLoading(false);
+      setLoading(false); 
     }
   };
 
@@ -30,15 +27,11 @@ function WishList() {
 
   const handleRemoveFromWishlist = async (id: string) => {
     try {
-      setLoading(true);
       await removeWishlist(id);
-      console.log("Item removed with ID:", id);
-      await fetchWishlist(); 
+      setWishlist((prevWishlist) => prevWishlist.filter((item) => item.product_id._id !== id));
+      await fetchWishlist();
     } catch (err: any) {
-      console.error("Error removing from wishlist:", err);
-      await fetchWishlist(); 
-    } finally {
-      setLoading(false); 
+      await fetchWishlist();
     }
   };
 
@@ -57,7 +50,7 @@ function WishList() {
             <p className="p-4">Your wishlist is empty.</p>
           ) : (
             wishlist.map((item, index) => (
-              <div key={item.product_id?._id || index}>
+              <div key={index}>
                 <WishListContainer
                   order={item}
                   container="wishlist"
