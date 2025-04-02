@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1743572949213" clover="3.2.0">
-  <project timestamp="1743572949213" name="All files">
-    <metrics statements="344" coveredstatements="285" conditionals="228" coveredconditionals="175" methods="87" coveredmethods="70" elements="659" coveredelements="530" complexity="0" loc="344" ncloc="344" packages="8" files="28" classes="28"/>
+<coverage generated="1743580299829" clover="3.2.0">
+  <project timestamp="1743580299829" name="All files">
+    <metrics statements="345" coveredstatements="286" conditionals="234" coveredconditionals="181" methods="87" coveredmethods="70" elements="666" coveredelements="537" complexity="0" loc="345" ncloc="345" packages="8" files="28" classes="28"/>
     <package name="src">
       <metrics statements="16" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
       <file name="App.tsx" path="C:\Users\GOURANG CHAUHAN\Desktop\BookStore_TypeScript\bookStore\src\App.tsx">
@@ -117,9 +117,9 @@
       </file>
     </package>
     <package name="src.components.BookDetails">
-      <metrics statements="35" coveredstatements="32" conditionals="20" coveredconditionals="19" methods="11" coveredmethods="8"/>
+      <metrics statements="35" coveredstatements="32" conditionals="26" coveredconditionals="25" methods="11" coveredmethods="8"/>
       <file name="FeedbackForm.tsx" path="C:\Users\GOURANG CHAUHAN\Desktop\BookStore_TypeScript\bookStore\src\components\BookDetails\FeedbackForm.tsx">
-        <metrics statements="35" coveredstatements="32" conditionals="20" coveredconditionals="19" methods="11" coveredmethods="8"/>
+        <metrics statements="35" coveredstatements="32" conditionals="26" coveredconditionals="25" methods="11" coveredmethods="8"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -129,7 +129,7 @@
         <line num="21" count="20" type="stmt"/>
         <line num="22" count="20" type="stmt"/>
         <line num="24" count="20" type="stmt"/>
-        <line num="25" count="10" type="cond" truecount="3" falsecount="0"/>
+        <line num="25" count="10" type="cond" truecount="5" falsecount="0"/>
         <line num="26" count="2" type="stmt"/>
         <line num="27" count="0" type="stmt"/>
         <line num="29" count="2" type="stmt"/>
@@ -153,8 +153,8 @@
         <line num="74" count="0" type="stmt"/>
         <line num="75" count="0" type="stmt"/>
         <line num="76" count="4" type="stmt"/>
-        <line num="99" count="3" type="stmt"/>
-        <line num="125" count="1" type="stmt"/>
+        <line num="94" count="3" type="stmt"/>
+        <line num="118" count="1" type="stmt"/>
       </file>
     </package>
     <package name="src.components.Cart">
@@ -345,7 +345,7 @@
       </file>
     </package>
     <package name="src.pages">
-      <metrics statements="54" coveredstatements="47" conditionals="0" coveredconditionals="0" methods="11" coveredmethods="9"/>
+      <metrics statements="55" coveredstatements="48" conditionals="0" coveredconditionals="0" methods="11" coveredmethods="9"/>
       <file name="BookPage.tsx" path="C:\Users\GOURANG CHAUHAN\Desktop\BookStore_TypeScript\bookStore\src\pages\BookPage.tsx">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="2" count="1" type="stmt"/>
@@ -389,13 +389,14 @@
         <line num="12" count="1" type="stmt"/>
       </file>
       <file name="MyOrder.tsx" path="C:\Users\GOURANG CHAUHAN\Desktop\BookStore_TypeScript\bookStore\src\pages\MyOrder.tsx">
-        <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <metrics statements="11" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
         <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
         <line num="9" count="1" type="stmt"/>
         <line num="27" count="2" type="stmt"/>
         <line num="34" count="4" type="stmt"/>

@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import Home from '../pages/Home'; // Adjust path as needed
+import Home from '../pages/Home'; 
 import Header from '../components/Same/Header';
 import Footer from '../components/Same/Footer';
 

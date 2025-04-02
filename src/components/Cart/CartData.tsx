@@ -4,9 +4,8 @@ import bookCover from '../../assets/images/bookImage.png';
 import { FaPlus, FaMinus, FaMapMarkerAlt } from 'react-icons/fa';
 import { getCartItems, removeFromCart } from '../../utils/API';
 
-// Define the Item interface with all required properties
 interface Item {
-  id: string; // Changed to string to match removeFromCart expectation
+  id: string; 
   quantity: number;
   name: string;
   author: string;
@@ -15,7 +14,6 @@ interface Item {
   image: string;
 }
 
-// Define the API response type (adjust based on your actual API response structure)
 interface CartItemResponse {
   _id: string;
   product_id: {
@@ -123,7 +121,7 @@ const CartData = () => {
       await clearCart();
       navigate('/orderConfirm');
     } catch (err: unknown) {
-      throw err; // Re-throw to allow caller to handle if needed
+      throw err; 
     }
   };
 

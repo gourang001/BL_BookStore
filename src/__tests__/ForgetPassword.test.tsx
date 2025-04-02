@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter, NavLink } from 'react-router-dom'; // Needed for NavLink
-import ForgotPassword from '../pages/ForgetPassword'; // Adjust path as needed
+import { MemoryRouter, NavLink } from 'react-router-dom'; 
+import ForgotPassword from '../pages/ForgetPassword'; 
 import Header from '../components/Same/Header';
 
 jest.mock('../components/Same/Header.tsx', () => ({

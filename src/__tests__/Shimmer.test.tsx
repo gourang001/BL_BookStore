@@ -28,7 +28,7 @@ describe('Shimmer Component', () => {
     render(<Shimmer />);
     
     const animatedElements = screen.getAllByTestId('shimmer-placeholder');
-    expect(animatedElements).toHaveLength(7); // 1 cover, 1 title, 1 author, 2 rating, 2 price
+    expect(animatedElements).toHaveLength(7); 
     
     animatedElements.forEach(element => {
       expect(element).toHaveClass('background-animate');
@@ -45,16 +45,16 @@ describe('Shimmer Component', () => {
     
     const animatedElements = screen.getAllByTestId('shimmer-placeholder');
     
-    // Book cover
+    
     expect(animatedElements[0]).toHaveClass('h-[135px] w-[105px]');
-    // Title
+    
     expect(animatedElements[1]).toHaveClass('h-[14px] w-[80%]');
-    // Author
+    
     expect(animatedElements[2]).toHaveClass('h-[10px] w-[60%]');
-    // Rating elements
+    
     expect(animatedElements[3]).toHaveClass('w-[33px] h-[16px]');
     expect(animatedElements[4]).toHaveClass('w-[40px] h-[10px]');
-    // Price elements
+    
     expect(animatedElements[5]).toHaveClass('w-[50px] h-[12px]');
     expect(animatedElements[6]).toHaveClass('w-[40px] h-[10px]');
   });

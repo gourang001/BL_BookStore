@@ -1,17 +1,17 @@
 import { render, screen } from '@testing-library/react';
-import MyOrder from '../pages/MyOrder'; // Adjust path to your MyOrder.tsx
+import MyOrder from '../pages/MyOrder'; 
 import Header from '../components/Same/Header';
 import Footer from '../components/Same/Footer';
 import Breadcrumbs from '../components/Same/Breadcrumbs';
 import OrderConatiner from '../components/Same/OrderConatiner';
 
-// Mock the imported components
+
 jest.mock('../components/Same/Header', () => jest.fn(() => <div data-testid="mock-header">Header</div>));
 jest.mock('../components/Same/Footer', () => jest.fn(() => <div data-testid="mock-footer">Footer</div>));
 jest.mock('../components/Same/Breadcrumbs', () => jest.fn(() => <div data-testid="mock-breadcrumbs">Breadcrumbs</div>));
 jest.mock('../components/Same/OrderConatiner', () => jest.fn(() => <div data-testid="mock-order-container">Order Container</div>));
 
-// Mock the image imports
+
 jest.mock('../assets/images/bookImage.png', () => 'mocked-book-image');
 jest.mock('../assets/images/bookImage2.png', () => 'mocked-book-image2');
 

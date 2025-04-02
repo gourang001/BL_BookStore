@@ -4,7 +4,7 @@ import { MemoryRouter, useNavigate } from 'react-router-dom';
 import Template from '../components/Auth/Template';
 import { loginApiCall, signupApiCall } from '../../src/utils/API';
 
-// Mock dependencies
+
 jest.mock('../../src/utils/API', () => ({
   loginApiCall: jest.fn(),
   signupApiCall: jest.fn(),

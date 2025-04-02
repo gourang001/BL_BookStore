@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import WishListContainer from "../components/Same/WishListContainer";
 
-// Mock the image import
+
 jest.mock('../assets/images/BookCover1.png', () => 'mocked-image-path');
 
 describe("WishListContainer", () => {
