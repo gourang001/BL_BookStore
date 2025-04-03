@@ -3,8 +3,8 @@ import React from "react";
 import bookImage from '../../assets/images/BookCover1.png';
 
 type orderProps = {
-  order: any;
-  container: string;
+  readonly order: any;
+  readonly container: string;
   onRemove: (id: string) => void;
 };
 
