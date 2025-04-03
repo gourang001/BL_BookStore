@@ -2,6 +2,7 @@ import React from 'react'
 import Footer from '../components/Same/Footer'
 import orderPlacedImage from '../assets/images/orderplaced.png'
 import Header from '../components/Same/Header'
+import { NavLink } from 'react-router-dom';
 
 const contactDetails = {
     emailId: "admin@bookstore.com",
@@ -36,9 +37,12 @@ const OrderConfirm = () => {
                     </tbody>
                 </table>
 
-                <button className='bg-[#3371B5] text-sm uppercase py-2 px-7 rounded-sm text-white'>
-                    Continue shopping
-                </button>
+                <NavLink
+                to='/home'  
+                    className='bg-[#3371B5] text-sm uppercase py-2 px-7 rounded-sm text-white'
+                >
+                Continue shopping
+                </NavLink>
 
             </div>
             <Footer />
