@@ -11,8 +11,8 @@ import BookCover7 from "../../assets/images/BookCover7.png";
 import BookCover8 from "../../assets/images/BookCover8.png";
 import BookCover9 from "../../assets/images/BookCover9.png";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchBooks } from "../../redux/bookSlice";
-import { RootState, AppDispatch } from "../../redux/store";
+import { fetchBooks } from "../../Redux/bookSlice";
+import { RootState, AppDispatch } from "../../Redux/store";
 import Shimmer from "./Shimmer";
 import { SearchContext } from "../../context/SearchProvider";
 
