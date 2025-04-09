@@ -16,6 +16,12 @@ import { RootState } from "../../redux/store";
 import Shimmer from "./Shimmer";
 import { SearchContext } from "../../context/SearchProvider";
 
+
+interface SearchContextType {
+  searchQuery: string;
+  sortQuery: string;
+}
+
 const bookCovers = [
   BookCover1, BookCover2, BookCover3, BookCover4,
   BookCover5, BookCover6, BookCover7, BookCover8,
@@ -30,7 +36,8 @@ const BooksCard = () => {
 
   const dispatch = useDispatch();
   const { allBooks: books, status, error } = useSelector((state: RootState) => state.books);
-  const { searchQuery, sortQuery } = useContext(SearchContext);
+  
+  const { searchQuery = '', sortQuery = '' } = useContext(SearchContext) as SearchContextType;
 
   useEffect(() => {
     if (status === "idle") {
@@ -38,13 +45,11 @@ const BooksCard = () => {
     }
   }, [status, dispatch]);
 
-  // Assign book covers to books
   const updatedBooks = books.map((book: any, index: number) => ({
     ...book,
     pic: bookCovers[index % bookCovers.length],
   }));
 
-  // Sorting logic
   const sortedBooks = useMemo(() => {
     let sortedArray = [...updatedBooks];
 
@@ -64,7 +69,6 @@ const BooksCard = () => {
     return sortedArray;
   }, [sortQuery, updatedBooks]);
 
-  // Filter books
   const filteredBooks = useMemo(() => {
     if (!searchQuery) return sortedBooks;
     return sortedBooks.filter((book) =>
@@ -72,7 +76,6 @@ const BooksCard = () => {
     );
   }, [searchQuery, sortedBooks]);
 
-  // Pagination
   const totalPages = Math.ceil(filteredBooks.length / booksPerPage);
   const startIndex = (currentPage - 1) * booksPerPage;
   const endIndex = startIndex + booksPerPage;

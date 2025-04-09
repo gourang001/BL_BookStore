@@ -122,28 +122,37 @@ function Template({ container }: AuthTemplateProps) {
 
     if (isValid) {
       try {
-        const payload = container === 'login'
-          ? { email: formData.email, password: formData.password }
-          : formData;
-        const apiCall = container === 'login' ? loginApiCall : signupApiCall;
-        await apiCall(payload);
-
         if (container === 'login') {
+          const loginData = {
+            email: formData.email,
+            password: formData.password,
+          };
+          await loginApiCall(loginData);
           toast.success('Login Successful!', {
             position: 'top-right',
             autoClose: 3000,
           });
           setTimeout(() => navigate('/home'), 1000);
         } else {
+          const signupData = {
+            fullName: formData.fullName,
+            email: formData.email,
+            password: formData.password,
+            phone: formData.phone,
+          };
+          await signupApiCall(signupData);
           navigate('/');
         }
       } catch (err) {
         setError(prev => ({
           ...prev,
-          email: `${container} failed. ${container === 'register' ? 'Email might already exist.' : 'Please check your credentials.'}`
+          email: `${container} failed. ${
+            container === 'register' ? 'Email might already exist.' : 'Please check your credentials.'
+          }`
         }));
       }
     }
+    
   };
 
   return (

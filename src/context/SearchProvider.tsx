@@ -1,28 +1,36 @@
-import { createContext, useState } from "react";
+import { createContext, useState, ReactNode } from "react";
 
-export const SearchContext = createContext({})
-
-type searchContextProps = {
-    children: React.ReactNode
+interface SearchContextType {
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+  sortQuery: string;
+  setSortQuery: (query: string) => void;
 }
 
-const SearchProvider = ({children}:searchContextProps) => {
+export const SearchContext = createContext<SearchContextType>({
+  searchQuery: "",
+  setSearchQuery: () => {}, 
+  sortQuery: "",
+  setSortQuery: () => {}, 
+});
 
-    const [searchQuery, setSearchQuery] = useState("")
-    const [sortQuery, setSortQuery] = useState("")
 
-    const value = {
-        searchQuery,
-        setSearchQuery,
-        sortQuery,
-        setSortQuery
-    }
+type SearchContextProps = {
+  children: ReactNode;
+};
 
-    return (
-        <SearchContext.Provider value={value}>
-            {children}
-        </SearchContext.Provider>
-    )
-}
+const SearchProvider = ({ children }: SearchContextProps) => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortQuery, setSortQuery] = useState("");
 
-export default SearchProvider
+  const value = {
+    searchQuery,
+    setSearchQuery,
+    sortQuery,
+    setSortQuery,
+  };
+
+  return <SearchContext.Provider value={value}>{children}</SearchContext.Provider>;
+};
+
+export default SearchProvider;
