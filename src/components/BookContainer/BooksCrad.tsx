@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState, useContext } from "react";
+import { useEffect, useMemo, useState, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import Books from "./Books";
 import BookCover1 from "../../assets/images/BookCover1.png";
@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchBooks } from "../../redux/bookSlice";
 import { RootState } from "../../redux/store";
 import Shimmer from "./Shimmer";
-import { SearchContext } from "../../context/SearchProvider"; // Import SearchContext
+import { SearchContext } from "../../context/SearchProvider";
 
 const bookCovers = [
   BookCover1, BookCover2, BookCover3, BookCover4,
@@ -30,7 +30,7 @@ const BooksCard = () => {
 
   const dispatch = useDispatch();
   const { allBooks: books, status, error } = useSelector((state: RootState) => state.books);
-  const { searchQuery, sortQuery }: any = useContext(SearchContext); // Use SearchContext
+  const { searchQuery, sortQuery } = useContext(SearchContext);
 
   useEffect(() => {
     if (status === "idle") {
@@ -44,7 +44,7 @@ const BooksCard = () => {
     pic: bookCovers[index % bookCovers.length],
   }));
 
-  // Sorting logic with useMemo
+  // Sorting logic
   const sortedBooks = useMemo(() => {
     let sortedArray = [...updatedBooks];
 
@@ -64,7 +64,7 @@ const BooksCard = () => {
     return sortedArray;
   }, [sortQuery, updatedBooks]);
 
-  // Filtering logic with useMemo
+  // Filter books
   const filteredBooks = useMemo(() => {
     if (!searchQuery) return sortedBooks;
     return sortedBooks.filter((book) =>

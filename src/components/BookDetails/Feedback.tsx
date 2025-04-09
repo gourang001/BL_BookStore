@@ -1,13 +1,23 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IoStarOutline, IoStarSharp } from "react-icons/io5";
 import { getBookReviews } from "../../utils/API.js";
 import { useParams } from "react-router-dom";
 import FeedbackForm from "./FeedbackForm.js";
 
+
+interface Review {
+  _id: string;
+  user_id: {
+    fullName: string;
+  };
+  rating: number;
+  comment: string;
+}
+
 function Feedback() {
-  const { id: routeBookId } = useParams();
-  const [reviews, setReviews] = useState([]);
-  const bookId = routeBookId;
+  const { id: routeBookId } = useParams<{ id: string }>();
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const bookId = routeBookId ?? "";
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -15,7 +25,7 @@ function Feedback() {
         const result = await getBookReviews(bookId);
         setReviews(result);
       } catch (error) {
-        throw(error);
+        console.error("Failed to fetch reviews:", error);
       }
     };
 
@@ -24,11 +34,10 @@ function Feedback() {
     }
   }, [bookId]);
 
-  // Callback function to add new review to the list
-  const handleNewReview = (newReview) => {
-    setReviews(prevReviews => [...prevReviews, newReview]);
-  };
   
+  const handleNewReview = (newReview: Review) => {
+    setReviews((prevReviews) => [...prevReviews, newReview]);
+  };
 
   return (
     <div>
@@ -37,12 +46,12 @@ function Feedback() {
         <div className="flex gap-3 py-2 items-start" key={review._id}>
           <div className="w-20 h-10 bg-[#F5F5F5] flex items-center justify-center rounded-full">
             <p className="text-[#707070]">
-              {review.user_id.fullName.split(" ")[0].charAt(0).toUpperCase()}
-              {review.user_id.fullName.split(" ")[1]?.charAt(0).toUpperCase()}
+              {review.user_id?.fullName?.split(" ")[0]?.charAt(0).toUpperCase()}
+              {review.user_id?.fullName?.split(" ")[1]?.charAt(0).toUpperCase()}
             </p>
           </div>
           <div className="flex flex-col gap-1">
-            <p className="text-[#0A0102] font-semibold">{review.user_id.fullName}</p>
+            <p className="text-[#0A0102] font-semibold">{review.user_id?.fullName}</p>
             <div className="flex gap-1">
               {[1, 2, 3, 4, 5].map((star) => (
                 <span key={star} className="text-xl">
@@ -61,5 +70,4 @@ function Feedback() {
     </div>
   );
 }
-
 export default Feedback;

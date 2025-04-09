@@ -1,22 +1,51 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent, FormEvent } from 'react';
 import loginSignUpImage from '../../assets/images/loginSignupImage.png';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { IoEyeOff, IoEye } from "react-icons/io5";
-import { loginApiCall, signupApiCall } from '../../utils/API.js';
+import { IoEyeOff, IoEye } from 'react-icons/io5';
+import { loginApiCall, signupApiCall } from '../../utils/API';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 type AuthTemplateProps = {
-  container: string;
-}
+  container: 'login' | 'register';
+};
+
+type FormFields = {
+  fullName: string;
+  email: string;
+  password: string;
+  phone: string;
+};
+
+type InputFieldProps = {
+  id: keyof FormFields;
+  label: string;
+  type: string;
+  value: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  error: string;
+  passwordVisible?: boolean;
+  togglePassword?: () => void;
+};
 
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%?&])[A-Za-z\d@$!%*?&]{8,}$/;
 const phoneRegex = /^\d{10}$/;
 
-const InputField = ({ id, label, type, value, onChange, error, passwordVisible, togglePassword }) => (
+const InputField: React.FC<InputFieldProps> = ({
+  id,
+  label,
+  type,
+  value,
+  onChange,
+  error,
+  passwordVisible,
+  togglePassword
+}) => (
   <div className='flex flex-col items-center w-full'>
-    <label className='text-xs font-normal self-start' htmlFor={id}>{label}</label>
+    <label className='text-xs font-normal self-start' htmlFor={id}>
+      {label}
+    </label>
     <div className='relative w-full'>
       <input
         type={passwordVisible !== undefined ? (passwordVisible ? 'text' : 'password') : type}
@@ -26,9 +55,11 @@ const InputField = ({ id, label, type, value, onChange, error, passwordVisible, 
         className='w-full h-9 border-2 rounded-sm p-2 outline-none focus:border-red-600'
       />
       {togglePassword && (
-        passwordVisible ? 
-          <IoEyeOff onClick={togglePassword} className='absolute right-2 top-3 cursor-pointer text-[#9D9D9D]' /> :
+        passwordVisible ? (
+          <IoEyeOff onClick={togglePassword} className='absolute right-2 top-3 cursor-pointer text-[#9D9D9D]' />
+        ) : (
           <IoEye onClick={togglePassword} className='absolute right-2 top-3 cursor-pointer text-[#9D9D9D]' />
+        )
       )}
     </div>
     {error && <p className='text-red-600 text-xs'>{error}</p>}
@@ -37,34 +68,37 @@ const InputField = ({ id, label, type, value, onChange, error, passwordVisible, 
 
 function Template({ container }: AuthTemplateProps) {
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormFields>({
     fullName: '',
     email: '',
     password: '',
     phone: ''
   });
-  const [error, setError] = useState({
-    fullName: "",
-    email: "",
-    password: "",
-    phone: ""
+
+  const [error, setError] = useState<FormFields>({
+    fullName: '',
+    email: '',
+    password: '',
+    phone: ''
   });
-  
+
   const navigate = useNavigate();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setFormData(prev => ({ ...prev, [id]: value }));
   };
 
-  const validateField = (field: string, value: string) => {
+  const validateField = (field: keyof FormFields, value: string): string => {
     switch (field) {
       case 'fullName':
         return value ? '' : 'Full name is required';
       case 'email':
         return emailRegex.test(value) ? '' : 'Invalid email format';
       case 'password':
-        return passwordRegex.test(value) ? '' : 'Password must be at least 8 characters, include uppercase, lowercase, number, and special character.';
+        return passwordRegex.test(value)
+          ? ''
+          : 'Password must be at least 8 characters, include uppercase, lowercase, number, and special character.';
       case 'phone':
         return phoneRegex.test(value) ? '' : 'Please enter a valid 10-digit phone number';
       default:
@@ -72,11 +106,11 @@ function Template({ container }: AuthTemplateProps) {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const fields = container === 'login' ? ['email', 'password'] : ['fullName', 'email', 'password', 'phone'];
+    const fields: (keyof FormFields)[] = container === 'login' ? ['email', 'password'] : ['fullName', 'email', 'password', 'phone'];
     let isValid = true;
-    const newErrors = { ...error };
+    const newErrors: FormFields = { ...error };
 
     fields.forEach(field => {
       const errorMsg = validateField(field, formData[field]);
@@ -88,14 +122,15 @@ function Template({ container }: AuthTemplateProps) {
 
     if (isValid) {
       try {
-        const apiCall = container === 'login' ? loginApiCall : signupApiCall;
-        const payload = container === 'login' 
+        const payload = container === 'login'
           ? { email: formData.email, password: formData.password }
           : formData;
+        const apiCall = container === 'login' ? loginApiCall : signupApiCall;
         await apiCall(payload);
+
         if (container === 'login') {
           toast.success('Login Successful!', {
-            position: "top-right",
+            position: 'top-right',
             autoClose: 3000,
           });
           setTimeout(() => navigate('/home'), 1000);
@@ -103,7 +138,10 @@ function Template({ container }: AuthTemplateProps) {
           navigate('/');
         }
       } catch (err) {
-        setError(prev => ({ ...prev, email: `${container} failed. ${container === 'signup' ? 'Email might already exist.' : 'Please check your credentials.'}` }));
+        setError(prev => ({
+          ...prev,
+          email: `${container} failed. ${container === 'register' ? 'Email might already exist.' : 'Please check your credentials.'}`
+        }));
       }
     }
   };
@@ -120,72 +158,77 @@ function Template({ container }: AuthTemplateProps) {
             <p className='font-semibold text-[#0A0102] text-lg'>ONLINE BOOK SHOPPING</p>
           </div>
         </div>
+
         <div className='bg-[#F5F5F5] w-full max-w-md h-auto rounded-[7px] shadow-xl p-4'>
           <div className='w-full'>
             <div className='flex justify-center font-semibold text-xl md:text-2xl py-5 pb-0 space-x-8 md:space-x-14'>
               <div className='flex flex-col items-center'>
-                <NavLink to={'/'}>
-                  <p className={`${container === "login" ? "text-black" : "text-[#878787]"} cursor-pointer`}>LOGIN</p>
-                  {container === "login" && <div className='border-b-[6px] rounded-xl border-[#A03037] w-10 mt-1'></div>}
+                <NavLink to='/'>
+                  <p className={`${container === 'login' ? 'text-black' : 'text-[#878787]'} cursor-pointer`}>LOGIN</p>
+                  {container === 'login' && <div className='border-b-[6px] rounded-xl border-[#A03037] w-10 mt-1'></div>}
                 </NavLink>
               </div>
               <div className='flex flex-col items-center'>
-                <NavLink to={'/register'}>
-                  <p className={`${container === "register" ? "text-black" : "text-[#878787]"} cursor-pointer`}>SIGNUP</p>
-                  {container === "register" && <div className='border-b-[6px] rounded-xl border-[#A03037] w-10 mt-1'></div>}
+                <NavLink to='/register'>
+                  <p className={`${container === 'register' ? 'text-black' : 'text-[#878787]'} cursor-pointer`}>SIGNUP</p>
+                  {container === 'register' && <div className='border-b-[6px] rounded-xl border-[#A03037] w-10 mt-1'></div>}
                 </NavLink>
               </div>
             </div>
           </div>
+
           <form className='w-full mt-4' onSubmit={handleSubmit}>
             <div className='flex w-full flex-col space-y-4 px-4 py-3'>
-              {container === "register" && (
+              {container === 'register' && (
                 <InputField
-                  id="fullName"
-                  label="Full Name"
-                  type="text"
+                  id='fullName'
+                  label='Full Name'
+                  type='text'
                   value={formData.fullName}
                   onChange={handleInputChange}
                   error={error.fullName}
                 />
               )}
               <InputField
-                id="email"
-                label="Email Id"
-                type="text"
+                id='email'
+                label='Email Id'
+                type='text'
                 value={formData.email}
                 onChange={handleInputChange}
                 error={error.email}
               />
               <InputField
-                id="password"
-                label="Password"
-                type="password"
+                id='password'
+                label='Password'
+                type='password'
                 value={formData.password}
                 onChange={handleInputChange}
                 error={error.password}
                 passwordVisible={passwordVisible}
                 togglePassword={() => setPasswordVisible(!passwordVisible)}
               />
-              {container === "register" && (
+              {container === 'register' && (
                 <InputField
-                  id="phone"
-                  label="Mobile Number"
-                  type="text"
+                  id='phone'
+                  label='Mobile Number'
+                  type='text'
                   value={formData.phone}
                   onChange={handleInputChange}
                   error={error.phone}
                 />
               )}
-              {container === "login" && (
-                <NavLink to={'forgotPassword'}>
+
+              {container === 'login' && (
+                <NavLink to='forgotPassword'>
                   <p className='w-full text-right text-xs text-[#9D9D9D] mt-1 cursor-pointer'>Forget Password?</p>
                 </NavLink>
               )}
-              <button type="submit" className='bg-[#A03037] text-sm text-white w-full h-9 rounded-sm p-1 mt-3'>
-                {container === "login" ? "Login" : "Signup"}
+
+              <button type='submit' className='bg-[#A03037] text-sm text-white w-full h-9 rounded-sm p-1 mt-3'>
+                {container === 'login' ? 'Login' : 'Signup'}
               </button>
-              {container === "login" && (
+
+              {container === 'login' && (
                 <>
                   <div className='relative flex items-center justify-center my-3'>
                     <div className='absolute border-t border-[#E1E4EA] w-[80%]'></div>

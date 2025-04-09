@@ -1,4 +1,3 @@
-import React from 'react'
 import Footer from '../components/Same/Footer'
 import orderPlacedImage from '../assets/images/orderplaced.png'
 import Header from '../components/Same/Header'

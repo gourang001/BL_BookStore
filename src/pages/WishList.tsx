@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Header from '../components/Same/Header';
 import Footer from '../components/Same/Footer';
 import Breadcrumbs from '../components/Same/Breadcrumbs';
@@ -12,7 +12,7 @@ function WishList() {
   const fetchWishlist = async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('token') ?? ''; // ✅ Ensure it's a string
       const data = await getWishlist(token);
       console.log("Fetched wishlist:", data); 
       setWishlist(data || []); 
@@ -74,3 +74,4 @@ function WishList() {
 }
 
 export default WishList;
+

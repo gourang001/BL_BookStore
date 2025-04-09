@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import bookImage from '../../assets/images/bookImage.png';
 import { FaHeart } from "react-icons/fa";
@@ -13,13 +13,14 @@ function BookDetails() {
     const navigate = useNavigate();
     const { book } = location.state || {};
     const bookData = book || {};
+
     const [imageActive, setImageActive] = useState(0);
     const [addToCartState, setAddToCartState] = useState(false);
-    const [cartCount, setCartCount] = useState(1);
+    const [cartCount] = useState(1);
     const [isWishlisted, setIsWishlisted] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(null);
-    
+    const [error, setError] = useState<string | null>(null);
+
     const fetchWishListStatus = async () => {
         try {
             const token = localStorage.getItem('token');
@@ -28,30 +29,20 @@ function BookDetails() {
                 return;
             }
             const wishlist = await getWishlist(token);
-            const isBookWishlisted = wishlist.some(item => 
+            const isBookWishlisted = wishlist.some((item: any) =>
                 item._id === bookData._id || item === bookData._id
             );
             setIsWishlisted(isBookWishlisted);
-        } catch (error) {
+        } catch {
             setIsWishlisted(false);
         }
-    }
+    };
 
     useEffect(() => {
         if (bookData._id) {
             fetchWishListStatus();
         }
     }, [bookData._id]);
-
-    const incrementCart = () => {
-        setCartCount(prevCount => prevCount + 1);
-    };
-
-    const decrementCart = () => {
-        if (cartCount > 1) {
-            setCartCount(prevCount => prevCount - 1);
-        }
-    };
 
     const handleAddToCart = async () => {
         setIsLoading(true);
@@ -82,13 +73,20 @@ function BookDetails() {
                 }, 1000);
             }
         } catch (err) {
-            const errorMessage = err.response?.data?.message || err.message || 'Failed to add item to cart';
+            let errorMessage = 'Failed to add item to cart';
+            if (err instanceof Error) {
+                errorMessage = err.message;
+            } else if (typeof err === 'object' && err !== null && 'response' in err) {
+                errorMessage = (err as any).response?.data?.message || errorMessage;
+            }
+
             setError(errorMessage);
             toast.error(errorMessage, {
                 position: "top-right",
                 autoClose: 2000,
             });
-            if (errorMessage === 'No authentication token found. Please log in.' || err.response?.status === 401) {
+
+            if (errorMessage.includes('authentication') || (err as any).response?.status === 401) {
                 setTimeout(() => navigate('/guest'), 1000);
             }
         } finally {
@@ -113,7 +111,7 @@ function BookDetails() {
                     autoClose: 2000,
                 });
             }
-        } catch (error) {
+        } catch {
             await fetchWishListStatus();
             toast.error('Wishlist action failed!', {
                 position: "top-right",
@@ -142,7 +140,7 @@ function BookDetails() {
                 <div className='flex xl:gap-2 ml-2 xl:ml-0 w-full space-x-2 justify-end p-2 md:p-4'>
                     {addToCartState ? (
                         <div className='h-10 md:h-12 w-32 sm:w-36 md:w-40 flex items-center justify-between'>
-                            
+                            {/* Future: quantity buttons? */}
                         </div>
                     ) : (
                         <button
@@ -162,6 +160,7 @@ function BookDetails() {
                     </div>
                 </div>
             </div>
+
             <div className='md:w-[60%] flex flex-col gap-6 ml-6'>
                 <div className='flex select-none flex-col gap-1 border-b-2 border-[#E0E0E0] w-full'>
                     <p className='text-3xl text-[#373434]'>{bookData.bookName}</p>
