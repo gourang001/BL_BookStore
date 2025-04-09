@@ -133,7 +133,7 @@ describe('BooksCard Component', () => {
     renderWithProviders(<BooksCard />, store);
 
     const prevButton = screen.queryByText('←');
-    expect(prevButton).not.toBeInTheDocument(); // No pagination for 3 books
+    expect(prevButton).not.toBeInTheDocument(); 
   });
 
   test('assigns book covers in a cycling pattern', async () => {
@@ -143,9 +143,8 @@ describe('BooksCard Component', () => {
     });
     renderWithProviders(<BooksCard />, store);
 
-    // Since Books is mocked, we can't test the actual image assignment
-    // But we can verify the logic works as expected
-    expect(mockBooks.length).toBeLessThanOrEqual(9); // Number of book covers
+  
+    expect(mockBooks.length).toBeLessThanOrEqual(9); 
   });
 
 
@@ -155,9 +154,9 @@ describe('BooksCard Component', () => {
 
     await waitFor(() => {
       const shimmers = screen.getAllByTestId('shimmer');
-      expect(shimmers).toHaveLength(12); // booksPerPage = 4 * 3
+      expect(shimmers).toHaveLength(12); 
       const loadingTexts = screen.getAllByText('Loading...');
-      expect(loadingTexts).toHaveLength(12); // Match the number of shimmers
+      expect(loadingTexts).toHaveLength(12); 
     });
   });
 

@@ -10,8 +10,12 @@ type orderProps = {
 
 function WishListContainer({ order, container, onRemove }: orderProps) {
   const handleRemove = () => {
-    onRemove(order.product_id._id); 
+    if (order.product_id && order.product_id._id) {
+      onRemove(order.product_id._id);
+    }
   };
+
+  if (!order.product_id) return null;
 
   return (
     <div

@@ -4,7 +4,6 @@ import Footer from '../components/Same/Footer';
 import Breadcrumbs from '../components/Same/Breadcrumbs';
 import { getWishlist, removeWishlist } from '../utils/API';
 import WishListContainer from '../components/Same/WishListContainer';
-import { v4 as uuid } from 'uuid';
 
 function WishList() {
   const [wishlist, setWishlist] = useState<any[]>([]);
@@ -20,7 +19,8 @@ function WishList() {
       const data = await getWishlist(token);
       setWishlist(data);
     } catch (err: any) {
-      setWishlist([]); 
+      console.error('Fetch Wishlist Error:', err);
+      setWishlist([]);
     } finally {
       setLoading(false);
     }
@@ -33,9 +33,10 @@ function WishList() {
   const handleRemoveFromWishlist = async (id: string) => {
     try {
       await removeWishlist(id);
-      setWishlist((prevWishlist) => prevWishlist.filter((item) => item.product_id._id !== id));
-      await fetchWishlist();
+      setWishlist((prev) => prev.filter((item) => item.product_id?._id !== id));
+      await fetchWishlist(); 
     } catch (err: any) {
+      console.error('Remove Wishlist Error:', err);
       await fetchWishlist();
     }
   };
@@ -44,20 +45,24 @@ function WishList() {
     if (loading) {
       return <p className="p-4">Loading...</p>;
     }
-    
-    if (wishlist.length === 0) {
-      return <p className="p-4">Your wishlist is empty.</p>;
+
+    if (!wishlist || wishlist.length === 0) {
+      return <p className="p-4 text-center text-gray-500">Your wishlist is empty.</p>;
     }
 
-    return wishlist.map((item) => (
-      <div key={uuid()}>
-        <WishListContainer
-          order={item}
-          container="wishlist"
-          onRemove={handleRemoveFromWishlist}
-        />
-      </div>
-    ));
+    return wishlist.map((item) => {
+      if (!item.product_id) return null;
+
+      return (
+        <div key={item.product_id._id}>
+          <WishListContainer
+            order={item}
+            container="wishlist"
+            onRemove={handleRemoveFromWishlist}
+          />
+        </div>
+      );
+    });
   };
 
   return (

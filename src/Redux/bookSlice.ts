@@ -1,4 +1,3 @@
-// src/redux/bookSlice.ts
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { getAllBooks } from "../utils/API";
 
@@ -14,7 +13,7 @@ export interface Book {
     discountPrice?: number;
 }
 
-export interface BooksState {  // Add export here
+export interface BooksState {  
     allBooks: Book[];
     status: "idle" | "loading" | "succeeded" | "failed";
     error: string | null;

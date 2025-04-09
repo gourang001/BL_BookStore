@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">76.74% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>32/40</span>
+                <span class='fraction'>33/43</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>5/10</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">86.11% </span>
+                <span class="strong">84.21% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>31/36</span>
+                <span class='fraction'>32/38</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -142,8 +142,14 @@
 <a name='L77'></a><a href='#L77'>77</a>
 <a name='L78'></a><a href='#L78'>78</a>
 <a name='L79'></a><a href='#L79'>79</a>
-<a name='L80'></a><a href='#L80'>80</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -165,6 +171,7 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -180,6 +187,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -196,6 +204,10 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -221,13 +233,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useState, useEffect } from 'react';
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useState, useEffect } from 'react';
 import Header from '../components/Same/Header';
 import Footer from '../components/Same/Footer';
 import Breadcrumbs from '../components/Same/Breadcrumbs';
 import { getWishlist, removeWishlist } from '../utils/API';
 import WishListContainer from '../components/Same/WishListContainer';
-import { v4 as uuid } from 'uuid';
 &nbsp;
 function WishList() {
   const [wishlist, setWishlist] = useState&lt;any[]&gt;([]);
@@ -243,7 +256,8 @@ function WishList() {
       const data = await getWishlist(token);
       setWishlist(data);
     } catch (err: any) {
-      setWishlist([]); 
+      console.error('Fetch Wishlist Error:', err);
+      setWishlist([]);
     } finally {
       setLoading(false);
     }
@@ -256,9 +270,10 @@ function WishList() {
   const handleRemoveFromWishlist = <span class="fstat-no" title="function not covered" >async (i</span>d: string) =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span>
 <span class="cstat-no" title="statement not covered" >    try {</span>
 <span class="cstat-no" title="statement not covered" >      await removeWishlist(id);</span>
-<span class="cstat-no" title="statement not covered" >      setWishlist(<span class="fstat-no" title="function not covered" >(p</span>revWishlist) =&gt; <span class="cstat-no" title="statement not covered" >prevWishlist.filter(<span class="fstat-no" title="function not covered" >(i</span>tem) =&gt; <span class="cstat-no" title="statement not covered" >item.product_id._id !== id)</span>)</span>;</span>
-<span class="cstat-no" title="statement not covered" >      await fetchWishlist();</span>
+<span class="cstat-no" title="statement not covered" >      setWishlist(<span class="fstat-no" title="function not covered" >(p</span>rev) =&gt; <span class="cstat-no" title="statement not covered" >prev.filter(<span class="fstat-no" title="function not covered" >(i</span>tem) =&gt; <span class="cstat-no" title="statement not covered" >item.product_id?._id !== id))</span></span>;</span>
+<span class="cstat-no" title="statement not covered" >      await fetchWishlist(); </span>
     } catch (err: any) {
+<span class="cstat-no" title="statement not covered" >      console.error('Remove Wishlist Error:', err);</span>
 <span class="cstat-no" title="statement not covered" >      await fetchWishlist();</span>
     }
   };
@@ -267,20 +282,24 @@ function WishList() {
     if (loading) {
       return &lt;p className="p-4"&gt;Loading...&lt;/p&gt;;
     }
-    
-    if (wishlist.length === 0) {
-      return &lt;p className="p-4"&gt;Your wishlist is empty.&lt;/p&gt;;
+&nbsp;
+    if (!wishlist || wishlist.length === 0) {
+      return &lt;p className="p-4 text-center text-gray-500"&gt;Your wishlist is empty.&lt;/p&gt;;
     }
 &nbsp;
-    return wishlist.map((item) =&gt; (
-      &lt;div key={uuid()}&gt;
-        &lt;WishListContainer
-          order={item}
-          container="wishlist"
-          onRemove={handleRemoveFromWishlist}
-        /&gt;
-      &lt;/div&gt;
-    ));
+    return wishlist.map((item) =&gt; {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (!item.product_id) <span class="cstat-no" title="statement not covered" >return null;</span>
+&nbsp;
+      return (
+        &lt;div key={item.product_id._id}&gt;
+          &lt;WishListContainer
+            order={item}
+            container="wishlist"
+            onRemove={handleRemoveFromWishlist}
+          /&gt;
+        &lt;/div&gt;
+      );
+    });
   };
 &nbsp;
   return (
@@ -300,14 +319,16 @@ function WishList() {
   );
 }
 &nbsp;
-export default WishList;</pre></td></tr></table></pre>
+export default WishList;
+&nbsp;
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-04-02T11:50:55.144Z
+                at 2025-04-08T08:02:58.415Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
