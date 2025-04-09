@@ -11,11 +11,10 @@ import BookCover7 from "../../assets/images/BookCover7.png";
 import BookCover8 from "../../assets/images/BookCover8.png";
 import BookCover9 from "../../assets/images/BookCover9.png";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchBooks } from "../../redux/bookSlice";
-import { RootState } from "../../redux/store";
+import { fetchBooks } from "@redux/bookSlice";
+import { RootState, AppDispatch } from "@redux/store"; // Import AppDispatch
 import Shimmer from "./Shimmer";
 import { SearchContext } from "../../context/SearchProvider";
-
 
 interface SearchContextType {
   searchQuery: string;
@@ -34,7 +33,7 @@ const BooksCard = () => {
   const rowsPerPage = 3;
   const booksPerPage = booksPerRow * rowsPerPage;
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>(); // Type dispatch with AppDispatch
   const { allBooks: books, status, error } = useSelector((state: RootState) => state.books);
   
   const { searchQuery = '', sortQuery = '' } = useContext(SearchContext) as SearchContextType;
@@ -52,7 +51,6 @@ const BooksCard = () => {
 
   const sortedBooks = useMemo(() => {
     let sortedArray = [...updatedBooks];
-
     if (sortQuery === "highToLow") {
       sortedArray.sort((a, b) => {
         if (a.price === 0 && b.price !== 0) return 1;
