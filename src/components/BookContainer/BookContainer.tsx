@@ -23,9 +23,6 @@ const BookContainer = () => {
         return 0; 
     });
 
-    const filteredBooks = sortedBooks.filter(book =>
-        book.title.toLowerCase().includes(searchQuery.toLowerCase())
-    );
 
     const items: MenuProps['items'] = [
         {
